@@ -1,0 +1,52 @@
+{% extends 'home.html' %} {% load static %}{% block maincontent %}
+<style>
+  .item-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+<div class="container">
+  <a href="{% url 'poll-create' %}" class="btn btn-primary">CreatePoll</a>
+  <div class="card">
+    <div class="card-header"><h3>Poll list</h3></div>
+    <div class="card-body">
+      <div class="poll-listbox">
+        {% for poll in polllist %}
+        <div class="poll-list">
+          {% if poll.active %}
+          <div class="item-wrap">
+            <a href="{% url 'poll-detail' poll.id %}" class="text-link">{{poll.text}}</a>
+            <p>Created by : {{poll.owner.username}}</p>
+            <p>Published on : {{poll.publishedAt}}</p>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-10">
+  <div class="card">
+    <div class="card-header"><h3>Your Active polls</h3></div>
+    <div class="card-body">
+      {% if request.user.profile.poll_set.all %}
+      <div class="poll-listbox">
+        {% for poll in request.user.profile.poll_set.all %}
+        <div class="poll-list">
+          {% if poll.active %}
+          <div class="item-wrap">
+            <a href="{% url 'poll-detail' poll.id %}" class="text-link">{{poll.text}}</a>
+            <p>Created by : {{poll.owner.username}}</p>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <h3>No active polls</h3>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock maincontent %}

@@ -1,0 +1,24 @@
+{% extends 'home.html' %} {% load static %}{% block maincontent %}
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Poll Result</h3>
+    </div>
+    <div class="card-body">
+      <h6>Result for: {{pollobj.text}}</h6>
+      <p>Total vote {{pollobj.total_vote}}</p>
+      {% for option in pollobj.get_result_dict %}
+      <div class="row">
+        <div class="col-auto"><p>option {{forloop.counter}} : {{option.text}}</p></div>
+        <div class="col progress-bar">
+          <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="{{option.percentage}}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar bg-success" style="width: {{ option.percentage }}%">{{option.percentage}}%</div>
+          </div>
+        </div>
+        <div class="col-auto"><p>Number of Vote:{{option.num_votes}}</p></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock maincontent %}

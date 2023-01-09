@@ -1,0 +1,21 @@
+{% extends 'home.html' %} {% load static %} {% block maincontent %}
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Poll Detail</h3>
+    </div>
+    <div class="card-body">
+      <h6>{{pollobj.text}}</h6>
+      <form action="." method="POST">
+        {% csrf_token %} {% for choice in pollobj.choice_set.all %}
+        <div class="form-check">
+          <input type="radio" name="choice" class="form-check-input" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+          <label for="choice{{ forloop.counter }}" class="form-check-label">{{ choice.choice_value }}</label>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Vote" class="btn btn-primary mt-3" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock maincontent %}

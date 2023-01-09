@@ -1,0 +1,19 @@
+{% extends 'home.html' %} {% load static %}{% block maincontent %}
+<style>
+  .container-box {
+    padding: 0 10rem;
+  }
+</style>
+<div class="container">
+  <h3>Create Poll</h3>
+  <div class="container-box">
+    <form action="" method="POST">
+      {% csrf_token %} {% for field in form %}
+      <div class="form-group">{{ field.errors }} {{ field.label_tag }} {{ field }}</div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Add Poll</button>
+      <a class="btn btn-warning" href="{% url 'index' %}" role="button">Back</a>
+    </form>
+  </div>
+</div>
+{% endblock maincontent %}
